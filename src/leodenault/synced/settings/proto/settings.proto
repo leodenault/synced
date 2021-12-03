@@ -1,0 +1,16 @@
+syntax = "proto2";
+
+package leodenault.synced.settings.proto;
+
+option java_package = "leodenault.synced.settings.proto";
+option java_outer_classname = "SettingsProto";
+
+// Global settings for the app.
+message Settings {
+  // The location of the directory on the user's computer containing audio which will be loaded by
+  // the application.
+  optional string audio_directory_location = 1;
+
+  // The token used by the application to be authorized as the user's Discord bot.
+  optional string bot_token = 2;
+}
