@@ -45,3 +45,15 @@ echo "Copying third party licenses."
 
 python dev/aggregate_licenses.py third_party "$LINUX_OUT/licenses"
 python dev/aggregate_licenses.py third_party "$WINDOWS_OUT/licenses"
+
+echo "Creating compressed archives."
+
+pushd $OUT > /dev/null
+zip -r "synced_linux_x64.zip" "linux"
+zip -r "synced_windows_x64.zip" "windows"
+
+echo "Cleaning temp files."
+
+popd > /dev/null
+rm -rf $LINUX_OUT
+rm -rf $WINDOWS_OUT
