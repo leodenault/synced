@@ -9,6 +9,6 @@ if [ -d $1 ]; then
 fi
 
 $JLINK \
-  --add-modules java.base,java.desktop,java.management,jdk.crypto.cryptoki \
+  --add-modules java.base,java.desktop,java.logging,java.management,jdk.crypto.cryptoki \
   --output $OUT \
   --module-path $JMODS
