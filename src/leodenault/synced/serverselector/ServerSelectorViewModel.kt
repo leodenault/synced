@@ -47,7 +47,6 @@ class ServerSelectorViewModel private constructor(
     CoroutineScopes.ioScope.launch {
       val disconnectedClient = connectedClient.disconnect()
       mutableConnectedClient.value = null
-      settingsManager.commit(settingsManager.fetch().toBuilder().clearBotToken().build())
       discordNavigator.navigateToBotAccess(disconnectedClient)
     }
   }
