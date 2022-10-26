@@ -27,7 +27,8 @@ fun AudioSelector(
         name = it.name,
         isSelected = selectedTrack?.key == it.key,
         onSelect = { onSelect(it) },
-        onDoubleTap = { onDoubleTap(it) }
+        onDoubleTap = { onDoubleTap(it) },
+        isEnabled = it.isSupported
       )
     }
   }

@@ -3,6 +3,7 @@ package leodenault.synced.startup
 import androidx.compose.runtime.MutableState
 import dagger.Reusable
 import leodenault.synced.desktopaudio.AudioDirectoryFile
+import leodenault.synced.desktopaudio.AudioFile
 import leodenault.synced.desktopaudio.DesktopAudioListLoader
 import leodenault.synced.discord.DisconnectedClient
 import leodenault.synced.discordnavigation.DiscordNavigator
@@ -16,7 +17,7 @@ import javax.inject.Inject
 class Startup @Inject constructor(
   private val discordNavigator: DiscordNavigator,
   private val playerNavigator: PlayerNavigator,
-  private val mutableAudioFiles: MutableState<List<File>>,
+  private val mutableAudioFiles: MutableState<List<AudioFile>>,
   private val desktopAudioListLoader: DesktopAudioListLoader,
   private val mutableAudioDirectory: MutableData<File>,
   private val audioDirectoryFile: AudioDirectoryFile,

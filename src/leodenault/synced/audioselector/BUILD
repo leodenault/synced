@@ -23,6 +23,7 @@ kt_jvm_library(
     deps = [
         "//src/leodenault/synced/audio",
         "//src/leodenault/synced/coroutines",
+        "//src/leodenault/synced/desktopaudio",
         "//src/leodenault/synced/util",
         "//third_party/kotlin",
     ],

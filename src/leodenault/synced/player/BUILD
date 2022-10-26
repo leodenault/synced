@@ -41,6 +41,7 @@ kt_jvm_library(
     name = "dagger_module",
     srcs = ["PlayerDaggerModule.kt"],
     deps = [
+        "//src/leodenault/synced/desktopaudio",
         "//third_party/compose",
         "//third_party/dagger",
     ],

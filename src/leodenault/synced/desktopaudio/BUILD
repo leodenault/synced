@@ -7,6 +7,7 @@ package(
 kt_jvm_library(
     name = "desktopaudio",
     srcs = [
+        "AudioFile.kt",
         "AudioDirectoryFile.kt",
         "DesktopAudioListLoader.kt",
     ],
@@ -15,6 +16,7 @@ kt_jvm_library(
         "//src/leodenault/synced/settings",
         "//src/leodenault/synced/util",
         "//third_party/dagger",
+        "//third_party/lavaplayer",
         "//third_party/javax:inject",
         "//third_party/kotlin",
     ],

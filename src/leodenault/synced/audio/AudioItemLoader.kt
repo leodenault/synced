@@ -8,14 +8,14 @@ import javax.inject.Inject
 
 @Reusable
 class AudioItemLoader @Inject constructor(
-  private val audioPlayerManager: AudioPlayerManager,
-  private val audioPlayer: AudioPlayer
+    private val audioPlayerManager: AudioPlayerManager,
+    private val audioPlayer: AudioPlayer
 ) {
-  suspend fun load(trackLocation: String): AudioStream {
-    val job = Job()
-    audioPlayerManager.loadItem(trackLocation, LoadResultHandler(audioPlayer, job))
-    job.join()
+    suspend fun load(trackLocation: String): AudioStream {
+        val job = Job()
+        audioPlayerManager.loadItem(trackLocation, LoadResultHandler(audioPlayer, job))
+        job.join()
 
-    return audioStreamOf(audioPlayer)
-  }
+        return audioStreamOf(audioPlayer)
+    }
 }
