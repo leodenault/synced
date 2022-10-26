@@ -18,7 +18,7 @@ kt_jvm_library(
 
 kt_jvm_binary(
     name = "Preview",
-    main_class = "synced.preview.PreviewKt",
+    main_class = "leodenault.synced.preview.PreviewKt",
     runtime_deps = [
         ":preview",
         "//third_party/compose:compose_runtime_linux_x64",
