@@ -1,9 +1,9 @@
 package leodenault.synced
 
 import leodenault.synced.app.DaggerApplicationComponent
-import leodenault.synced.logging.DaggerLoggingComponent
+import leodenault.synced.logging.DaggerLoggingDevComponent
 
 fun main() {
-  DaggerLoggingComponent.create().loggingConfiguration.apply()
+  DaggerLoggingDevComponent.create().loggingConfiguration.apply()
   DaggerApplicationComponent.create().application.run()
 }
