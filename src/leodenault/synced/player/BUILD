@@ -9,6 +9,7 @@ kt_jvm_library(
     srcs = [
         "AudioSelectorView.kt",
         "NowPlayingView.kt",
+        "PlayerButtonView.kt",
         "PlayerControlsView.kt",
         "PlayerFooterView.kt",
         "PlayerHeaderView.kt",

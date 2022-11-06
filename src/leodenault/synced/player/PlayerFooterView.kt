@@ -11,7 +11,9 @@ fun PlayerFooter(
   modifier: Modifier = Modifier,
   isAudioPlaying: Boolean = false,
   activeTitle: String? = null,
-  onPlayButtonClick: () -> Unit = {}
+  onPlayButtonClick: () -> Unit = {},
+  onNextTrackClick: () -> Unit = {},
+  onPreviousTrackClick: () -> Unit = {}
 ) {
   Column(
     modifier = modifier.width(IntrinsicSize.Max)
@@ -22,7 +24,9 @@ fun PlayerFooter(
     PlayerControls(
       modifier = Modifier.fillMaxWidth().fillMaxHeight(),
       isAudioPlaying = isAudioPlaying,
-      onPlayButtonClick = onPlayButtonClick
+      onPlayButtonClick = onPlayButtonClick,
+      onNextTrackClick = onNextTrackClick,
+      onPreviousTrackClick = onPreviousTrackClick
     )
   }
 }

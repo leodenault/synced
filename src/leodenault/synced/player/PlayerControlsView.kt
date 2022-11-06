@@ -18,27 +18,19 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun PlayerControls(
-  modifier: Modifier = Modifier,
-  isAudioPlaying: Boolean,
-  onPlayButtonClick: () -> Unit = {},
+    modifier: Modifier = Modifier,
+    isAudioPlaying: Boolean,
+    onPlayButtonClick: () -> Unit = {},
+    onNextTrackClick: () -> Unit = {},
+    onPreviousTrackClick: () -> Unit = {}
 ) {
-  Row(
-    modifier = modifier,
-    horizontalArrangement = Arrangement.Center,
-    verticalAlignment = Alignment.CenterVertically
-  ) {
-    Button(
-      modifier = Modifier.size(80.dp).padding(5.dp),
-      onClick = onPlayButtonClick,
-      colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.secondary),
-      shape = CircleShape
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
     ) {
-      Text(
-        text = if (isAudioPlaying) "\u23F8" else "\u25B6",
-        fontSize = 30.sp,
-        color = MaterialTheme.colors.primary,
-        textAlign = TextAlign.Center
-      )
+        PlayerButton("\u23EE", onPreviousTrackClick)
+        PlayerButton(if (isAudioPlaying) "\u23F8" else "\u25B6", onPlayButtonClick)
+        PlayerButton("\u23ED", onNextTrackClick)
     }
-  }
 }

@@ -64,11 +64,11 @@ class PlayerPageViewModel private constructor(
 
     fun onPlayButtonClick() {
         val stream = activeAudioStream.value
-        val selectedTrack = audioSelectorViewModel.selectedAudioTrack
+        val selectedTrack = audioSelectorViewModel.selectedAudioTrack.value
 
         when {
             stream == null -> if (selectedTrack == null) return else {
-                loadAndPlayTrack(selectedTrack)
+                loadAndPlayTrack(selectedTrack.track)
             }
 
             isAudioPlaying -> stream.pause()
@@ -78,6 +78,25 @@ class PlayerPageViewModel private constructor(
 
     fun onTrackDoubleTapped(audioTrack: AudioTrackViewModel) {
         loadAndPlayTrack(audioTrack)
+    }
+
+    fun onPlayNextTrack() = playTrackOffsetBy(1)
+
+    fun onPlayPreviousTrack() = playTrackOffsetBy(-1)
+
+    private fun playTrackOffsetBy(offsetIndex: Int) {
+        val selectedTrack = audioSelectorViewModel.selectedAudioTrack.value ?: return
+        val allAudioTracks = audioSelectorViewModel.audioTracks
+        var nextTrackIndex = selectedTrack.index
+        do {
+            nextTrackIndex =
+                Math.floorMod(nextTrackIndex + offsetIndex, allAudioTracks.size)
+        } while (
+            nextTrackIndex != selectedTrack.index && !allAudioTracks[nextTrackIndex].isSupported)
+
+        val newlySelectedTrack = allAudioTracks[nextTrackIndex]
+        audioSelectorViewModel.onSelect(newlySelectedTrack)
+        loadAndPlayTrack(newlySelectedTrack)
     }
 
     private fun loadAndPlayTrack(audioTrack: AudioTrackViewModel) {

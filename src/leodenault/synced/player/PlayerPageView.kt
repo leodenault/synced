@@ -27,7 +27,7 @@ class PlayerPageView(private val viewModel: PlayerPageViewModel) : PageView {
       AudioSelector(
         modifier = Modifier.fillMaxHeight(0.78f),
         audioTracks = viewModel.audioSelectorViewModel.audioTracks,
-        selectedTrack = viewModel.audioSelectorViewModel.selectedAudioTrack,
+        selectedTrack = viewModel.audioSelectorViewModel.selectedAudioTrack.value?.track,
         onSelect = viewModel.audioSelectorViewModel::onSelect,
         onDoubleTap = viewModel::onTrackDoubleTapped
       )
@@ -36,7 +36,9 @@ class PlayerPageView(private val viewModel: PlayerPageViewModel) : PageView {
         modifier = Modifier.fillMaxHeight().fillMaxWidth(),
         activeTitle = viewModel.activeTitle,
         isAudioPlaying = viewModel.isAudioPlaying,
-        onPlayButtonClick = viewModel::onPlayButtonClick
+        onPlayButtonClick = viewModel::onPlayButtonClick,
+        onNextTrackClick = viewModel::onPlayNextTrack,
+        onPreviousTrackClick = viewModel::onPlayPreviousTrack
       )
     }
   }
