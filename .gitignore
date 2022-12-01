@@ -1,5 +1,6 @@
+.idea
 .ijwb
-bazel*
+bazel-*
 jdk
 out
 *.iml
