@@ -8,3 +8,8 @@ java_library(
     name = "inject",
     exports = ["@maven//:javax_inject_javax_inject"],
 )
+
+filegroup(
+    name = "licenses",
+    srcs = ["LICENSE.txt"],
+)

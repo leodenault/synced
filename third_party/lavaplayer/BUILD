@@ -8,3 +8,8 @@ java_library(
     name = "lavaplayer",
     exports = ["@maven//:com_sedmelluq_lavaplayer"],
 )
+
+filegroup(
+    name = "licenses",
+    srcs = ["LICENSE.txt"],
+)

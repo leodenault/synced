@@ -7,3 +7,9 @@ package(
 )
 
 dagger_rules()
+
+
+filegroup(
+    name = "licenses",
+    srcs = ["LICENSE.txt"],
+)

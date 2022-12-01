@@ -1,59 +1,26 @@
 #!/bin/bash
 
-echo "Building deployment targets."
-
-./bazelisk build \
-    //src/leodenault/synced:Synced_linux_x64_deploy.jar \
-    //src/leodenault/synced:Synced_windows_x64_deploy.jar
-
 CWD=$(pwd)
-OUT="out"
-LINUX_OUT="$OUT/linux"
-WINDOWS_OUT="$OUT/windows"
-JLINK="jdk/linux_x64/jdk-11/bin/jlink"
+OUT_DIR=$1
+PLATFORM=$2
+PLATFORM_SCRIPT=$3
+PLATFORM_BINARY=$4
+LICENSES_ZIP=$5
+JLINK_ZIP=$6
 
-synced_bin() {
-  echo "bazel-bin/src/leodenault/synced/Synced_$1_x64_deploy.jar"
-}
+TEMP_DIR="$OUT_DIR/Synced"
 
-echo "Cleaning output directory."
+mkdir $TEMP_DIR
 
-if [ -d $OUT ]; then
-  rm -rf $OUT
-fi
+cp $PLATFORM_BINARY $TEMP_DIR
+cp $PLATFORM_SCRIPT $TEMP_DIR
 
-mkdir $OUT
-mkdir $WINDOWS_OUT
-mkdir "$WINDOWS_OUT/jre"
-mkdir "$WINDOWS_OUT/licenses"
-mkdir $LINUX_OUT
-mkdir "$LINUX_OUT/jre"
-mkdir "$LINUX_OUT/licenses"
+unzip -q $JLINK_ZIP -d $TEMP_DIR
 
-cp -v $(synced_bin "linux") $LINUX_OUT
-cp -v $(synced_bin "windows") $WINDOWS_OUT
+unzip -q $LICENSES_ZIP -d $TEMP_DIR
 
-cp -v scripts/Synced.sh $LINUX_OUT
-cp -v scripts/Synced.bat $WINDOWS_OUT
-
-echo "Running Java linker."
-
-./dev/jlink.sh "$LINUX_OUT/jre" $JLINK jdk/linux_x64/jdk-11/jmods
-./dev/jlink.sh "$WINDOWS_OUT/jre" $JLINK jdk/windows_x64/jdk-11/jmods
-
-echo "Copying third party licenses."
-
-python dev/aggregate_licenses.py third_party "$LINUX_OUT/licenses"
-python dev/aggregate_licenses.py third_party "$WINDOWS_OUT/licenses"
-
-echo "Creating compressed archives."
-
-pushd $OUT > /dev/null
-zip -r "synced_linux_x64.zip" "linux"
-zip -r "synced_windows_x64.zip" "windows"
-
-echo "Cleaning temp files."
-
+pushd "$OUT_DIR" > /dev/null
+zip -qr "synced_${PLATFORM}_x64.zip" Synced
 popd > /dev/null
-rm -rf $LINUX_OUT
-rm -rf $WINDOWS_OUT
+
+rm -rf $TEMP_DIR

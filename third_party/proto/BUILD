@@ -8,3 +8,8 @@ java_library(
     name = "proto",
     exports = ["@com_google_protobuf//:protobuf_java"],
 )
+
+filegroup(
+    name = "licenses",
+    srcs = ["LICENSE.txt"],
+)

@@ -1,6 +1,7 @@
 .idea
 .ijwb
 bazel-*
-jdk
+jdk/linux*
+jdk/windows*
 out
 *.iml

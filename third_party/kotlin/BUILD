@@ -18,3 +18,8 @@ kt_jvm_library(
     name = "kotlin",
     exports = ["@maven//:org_jetbrains_kotlinx_kotlinx_coroutines_android"],
 )
+
+filegroup(
+    name = "licenses",
+    srcs = ["LICENSE.txt"],
+)

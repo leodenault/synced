@@ -35,3 +35,8 @@ kt_compiler_plugin(
         "@maven//:org_jetbrains_compose_compiler_compiler_hosted",
     ],
 )
+
+filegroup(
+    name = "licenses",
+    srcs = ["LICENSE.txt"],
+)

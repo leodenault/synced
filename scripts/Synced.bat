@@ -1,2 +1,1 @@
-cd jre\bin
-java -jar ..\..\Synced_windows_x64_deploy.jar
+.\jre\bin\java.exe -jar Synced_windows_x64_deploy.jar

@@ -1,4 +1,7 @@
 load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_jvm_binary", "kt_jvm_library")
+load("//bazel:jdk_rules.bzl", "jlink_linux", "jlink_windows")
+load("//bazel:license_rules.bzl", "aggregate_licenses")
+load("//bazel:packaging_rules.bzl", "synced_linux_pkg", "synced_windows_pkg")
 
 kt_jvm_library(
     name = "main",
@@ -44,3 +47,43 @@ java_binary(
         "//third_party/compose:compose_runtime_windows_x64",
     ],
 )
+
+aggregate_licenses(
+    name = "licenses",
+    srcs = [
+        "//third_party/compose:licenses",
+        "//third_party/dagger:licenses",
+        "//third_party/javax:licenses",
+        "//third_party/kord:licenses",
+        "//third_party/kotlin:licenses",
+        "//third_party/lavaplayer:licenses",
+        "//third_party/proto:licenses",
+    ],
+)
+
+jlink_linux(
+    name = "jlink_linux",
+    srcs = ["//jdk:jdk_linux"],
+)
+
+synced_linux_pkg(
+    name = "synced_linux_pkg",
+    binary_target = ":Synced_linux_x64_deploy.jar",
+    execution_script_target = "//scripts:linux",
+    jlink_package_target = ":jlink_linux",
+    licenses_target = ":licenses",
+)
+
+jlink_windows(
+    name = "jlink_windows",
+    srcs = ["//jdk:jdk_windows"],
+)
+
+synced_windows_pkg(
+    name = "synced_windows_pkg",
+    binary_target = ":Synced_windows_x64_deploy.jar",
+    execution_script_target = "//scripts:windows",
+    jlink_package_target = ":jlink_windows",
+    licenses_target = ":licenses",
+)
+
