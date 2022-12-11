@@ -1,5 +1,5 @@
 load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive", "http_file")
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive", "http_file", "http_jar")
 load("@bazel_tools//tools/build_defs/repo:maven_rules.bzl", "maven_jar")
 
 #############################################################
@@ -159,3 +159,14 @@ kotlin_repositories(
 )
 
 register_toolchains("//third_party/kotlin:kotlin_toolchain")
+
+#############################################################
+# jnativehook
+#############################################################
+
+JNATIVEHOOK_VERSION = "2.2.2"
+
+http_jar(
+    name = "jnativehook",
+    urls = ["https://github.com/kwhat/jnativehook/releases/download/%s/jnativehook-%s.jar" % (JNATIVEHOOK_VERSION, JNATIVEHOOK_VERSION)],
+)
