@@ -25,7 +25,9 @@ class DesktopAudioListLoader @Inject constructor(private val topLevelDirectory: 
     }
     val mediaContainers = MediaContainer.values()
     val childAudioFiles = children.filter { child ->
-      child.isFile && mediaContainers.any { child.extension == it.fileExtension }
+      child.isFile
+          && child.canRead()
+          && mediaContainers.any { child.extension == it.fileExtension }
     }.map { child ->
       AudioFile(child, mediaContainers.any {
         it.probe.fullySupports(
