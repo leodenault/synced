@@ -1,6 +1,13 @@
 # !/bin/bash
 
-./bazelisk build //src/leodenault/synced:Synced_windows_x64_deploy.jar
-rsync bazel-bin/src/leodenault/synced/Synced_windows_x64_deploy.jar out/wsl_config_run/
-cd out/wsl_config_run
-../../jdk/windows_x64/jdk-11/bin/java.exe -jar ./Synced_windows_x64_deploy.jar
+USERNAME=$(powershell.exe '$env:UserName')
+TEMP_DIR="/mnt/c/Users/${USERNAME::-1}/AppData/Local/Temp"
+
+if [ -d $TEMP_DIR/Synced ]; then
+  rm -rf $TEMP_DIR/Synced
+fi
+
+./bazelisk build //src/leodenault/synced:synced_windows_pkg
+unzip bazel-bin/src/leodenault/synced/synced_windows_x64.zip -d $TEMP_DIR
+cd $TEMP_DIR/Synced
+./jre/bin/java.exe -jar ./Synced_windows_x64_deploy.jar
