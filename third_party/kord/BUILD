@@ -1,12 +1,18 @@
+load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_jvm_library")
+
 licenses(["notice"])  # MIT
 
 package(
     default_visibility = ["//:all_packages"],
 )
 
-alias(
+kt_jvm_library(
     name = "kord",
-    actual = "@maven//:dev_kord_kord_core",
+    exports = [
+        "@maven//:dev_kord_kord_core",
+        "@maven//:dev_kord_kord_core_voice",
+        "@maven//:dev_kord_kord_voice",
+    ],
 )
 
 filegroup(

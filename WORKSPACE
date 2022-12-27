@@ -104,19 +104,27 @@ http_archive(
 )
 
 load("@rules_jvm_external//:defs.bzl", "maven_install")
+load("@rules_jvm_external//:specs.bzl", "maven")
 
-COMPOSE_VERSION = "1.0.0-alpha3"
+KORD_VERSION = "0.8.0-M17"
 
 maven_install(
     artifacts = [
         "com.sedmelluq:lavaplayer:1.3.77",
-        "dev.kord:kord-core:0.8.0-M5",
-        "org.jetbrains.compose:compose-full:%s" % COMPOSE_VERSION,
-        "org.jetbrains.compose.compiler:compiler-hosted:%s" % COMPOSE_VERSION,
-        "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2",
-        "org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.5.1",  # Required to satisfy compose dependencies.
-        "org.jetbrains.skiko:skiko-jvm-runtime-linux-x64:0.3.17",  # Required to satisfy compose dependencies.
-        "org.jetbrains.skiko:skiko-jvm-runtime-windows-x64:0.3.17",  # Required to satisfy compose dependencies.
+        "dev.kord:kord-core:%s" % KORD_VERSION,
+        "dev.kord:kord-voice:%s" % KORD_VERSION,
+        maven.artifact(
+            group = "dev.kord",
+            artifact = "kord-core",
+            version = KORD_VERSION,
+            classifier = "voice",
+        ),
+        "org.jetbrains.compose:compose-full:1.0.0",
+        "org.jetbrains.compose.compiler:compiler-hosted:1.3.0",
+        "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4",
+        "org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.6.4",  # Required to satisfy compose dependencies.
+        "org.jetbrains.skiko:skiko-jvm-runtime-linux-x64:0.6.7",  # Required to satisfy compose dependencies.
+        "org.jetbrains.skiko:skiko-jvm-runtime-windows-x64:0.6.8",  # Required to satisfy compose dependencies.
     ] + DAGGER_ARTIFACTS,
     fail_on_missing_checksum = False,
     fetch_sources = True,
@@ -131,19 +139,20 @@ maven_install(
 # Kotlin
 #############################################################
 
-KOTLIN_RULES_VERSION = "1.5.0-beta-4"
+KOTLIN_RULES_VERSION = "1.7.0"
 
 http_archive(
     name = "io_bazel_rules_kotlin",
     urls = ["https://github.com/bazelbuild/rules_kotlin/releases/download/v%s/rules_kotlin_release.tgz" % KOTLIN_RULES_VERSION],
+    sha256 = "15afe2d727f0dba572e0ce58f1dac20aec1441422ca65f7c3f7671b47fd483bf",
 )
 
 load("@io_bazel_rules_kotlin//kotlin:repositories.bzl", "kotlin_repositories", "kotlinc_version")
 
 kotlin_repositories(
     compiler_release = kotlinc_version(
-        release = "1.5.21",
-        sha256 = "f3313afdd6abf1b8c75c6292f4e41f2dbafefc8f6c72762c7ba9b3daeef5da59",
+        release = "1.7.10",
+        sha256 = "7683f5451ef308eb773a686ee7779a76a95ed8b143c69ac247937619d7ca3a09",
     ),
 )
 

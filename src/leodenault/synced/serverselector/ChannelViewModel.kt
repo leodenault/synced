@@ -1,6 +1,7 @@
 package leodenault.synced.serverselector
 
 import dagger.Reusable
+import dev.kord.core.behavior.channel.connect
 import dev.kord.core.entity.channel.VoiceChannel
 import dev.kord.voice.VoiceConnection
 import kotlinx.coroutines.launch
