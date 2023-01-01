@@ -106,7 +106,8 @@ http_archive(
 load("@rules_jvm_external//:defs.bzl", "maven_install")
 load("@rules_jvm_external//:specs.bzl", "maven")
 
-KORD_VERSION = "0.8.0-M17"
+#KORD_VERSION = "0.8.0-M17"
+KORD_VERSION = "0.8.x-SNAPSHOT"
 
 maven_install(
     artifacts = [

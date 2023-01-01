@@ -3,6 +3,8 @@ package leodenault.synced.discord
 import dev.kord.core.Kord
 import dev.kord.core.event.gateway.ReadyEvent
 import dev.kord.core.on
+import dev.kord.gateway.Intent
+import dev.kord.gateway.Intents
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import leodenault.synced.coroutines.CoroutineScopes
@@ -19,12 +21,13 @@ class DisconnectedClient private constructor(
       onSuccess = { internalClient ->
         val waitForConnection = Job()
 
-        internalClient.on<ReadyEvent> {
+        val connectedClientReadyJob = internalClient.on<ReadyEvent> {
           waitForConnection.complete()
         }
 
         CoroutineScopes.ioScope.launch { internalClient.login() }
         waitForConnection.join()
+        connectedClientReadyJob.cancel()
 
         SuccessfulClientConnectionResult(ConnectedClient(internalClient, this).also {
           mutableConnectedClient.value = it
