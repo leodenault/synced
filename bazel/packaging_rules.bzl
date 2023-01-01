@@ -37,7 +37,7 @@ def _synced_pkg(
         licenses_target):
     native.genrule(
         name = name,
-        outs = ["synced_" + platform_name + "_x64.zip"],
+        outs = [name + ".zip"],
         tools = [
             "//dev:aggregate_licenses",
             "//dev:deploy",
@@ -54,7 +54,8 @@ def _synced_pkg(
             $(location {execution_script_target}) \\
             $(location {binary_target}) \\
             $(location {licenses_target}) \\
-            "$(location {jlink_package_target})"
+            "$(location {jlink_package_target})" \\
+            $@
         """.format(
             platform_name = platform_name,
             execution_script_target = execution_script_target,

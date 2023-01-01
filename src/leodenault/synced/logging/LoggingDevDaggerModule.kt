@@ -12,6 +12,6 @@ class LoggingDevDaggerModule {
   @Provides
   @IntoSet
   fun provideInfoConsoleHandler(): Handler = ConsoleHandler().apply {
-    level = Level.INFO
+    level = Level.ALL
   }
 }

@@ -125,6 +125,7 @@ maven_install(
         "org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.6.4",  # Required to satisfy compose dependencies.
         "org.jetbrains.skiko:skiko-jvm-runtime-linux-x64:0.6.7",  # Required to satisfy compose dependencies.
         "org.jetbrains.skiko:skiko-jvm-runtime-windows-x64:0.6.8",  # Required to satisfy compose dependencies.
+        "org.slf4j:slf4j-jdk14:2.0.6",
     ] + DAGGER_ARTIFACTS,
     fail_on_missing_checksum = False,
     fetch_sources = True,

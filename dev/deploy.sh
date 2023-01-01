@@ -7,6 +7,7 @@ PLATFORM_SCRIPT=$3
 PLATFORM_BINARY=$4
 LICENSES_ZIP=$5
 JLINK_ZIP=$6
+OUT=$7
 
 TEMP_DIR="$OUT_DIR/Synced"
 
@@ -20,7 +21,7 @@ unzip -q $JLINK_ZIP -d $TEMP_DIR
 unzip -q $LICENSES_ZIP -d $TEMP_DIR
 
 pushd "$OUT_DIR" > /dev/null
-zip -qr "synced_${PLATFORM}_x64.zip" Synced
+zip -qr "$CWD/$OUT" Synced
 popd > /dev/null
 
 rm -rf $TEMP_DIR

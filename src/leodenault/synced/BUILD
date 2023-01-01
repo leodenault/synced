@@ -27,6 +27,7 @@ java_binary(
     runtime_deps = [
         ":main",
         "//third_party/compose:compose_runtime_linux_x64",
+        "//third_party/slf4j",
     ],
 )
 
@@ -36,6 +37,7 @@ java_binary(
     runtime_deps = [
         ":main_dev",
         "//third_party/compose:compose_runtime_linux_x64",
+        "//third_party/slf4j",
     ],
 )
 
@@ -45,6 +47,17 @@ java_binary(
     runtime_deps = [
         ":main",
         "//third_party/compose:compose_runtime_windows_x64",
+        "//third_party/slf4j",
+    ],
+)
+
+java_binary(
+    name = "Synced_windows_x64_dev",
+    main_class = "leodenault.synced.MainDevKt",
+    runtime_deps = [
+        ":main_dev",
+        "//third_party/compose:compose_runtime_windows_x64",
+        "//third_party/slf4j",
     ],
 )
 
@@ -58,6 +71,7 @@ aggregate_licenses(
         "//third_party/kotlin:licenses",
         "//third_party/lavaplayer:licenses",
         "//third_party/proto:licenses",
+        "//third_party/slf4j:licenses",
     ],
 )
 
@@ -67,7 +81,7 @@ jlink_linux(
 )
 
 synced_linux_pkg(
-    name = "synced_linux_pkg",
+    name = "synced_linux_x64_pkg",
     binary_target = ":Synced_linux_x64_deploy.jar",
     execution_script_target = "//scripts:linux",
     jlink_package_target = ":jlink_linux",
@@ -80,10 +94,17 @@ jlink_windows(
 )
 
 synced_windows_pkg(
-    name = "synced_windows_pkg",
+    name = "synced_windows_x64_pkg",
     binary_target = ":Synced_windows_x64_deploy.jar",
     execution_script_target = "//scripts:windows",
     jlink_package_target = ":jlink_windows",
     licenses_target = ":licenses",
 )
 
+synced_windows_pkg(
+    name = "synced_windows_x64_dev_pkg",
+    binary_target = ":Synced_windows_x64_dev_deploy.jar",
+    execution_script_target = "//scripts:windows",
+    jlink_package_target = ":jlink_windows",
+    licenses_target = ":licenses",
+)
