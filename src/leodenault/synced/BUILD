@@ -24,6 +24,7 @@ kt_jvm_library(
 java_binary(
     name = "Synced_linux_x64",
     main_class = "leodenault.synced.MainKt",
+    data = ["//third_party/jnativehook:natives_linux_x64"],
     runtime_deps = [
         ":main",
         "//third_party/compose:compose_runtime_linux_x64",
@@ -34,6 +35,7 @@ java_binary(
 java_binary(
     name = "Synced_linux_x64_dev",
     main_class = "leodenault.synced.MainDevKt",
+    data = ["//third_party/jnativehook:natives_linux_x64"],
     runtime_deps = [
         ":main_dev",
         "//third_party/compose:compose_runtime_linux_x64",
@@ -44,6 +46,7 @@ java_binary(
 java_binary(
     name = "Synced_windows_x64",
     main_class = "leodenault.synced.MainKt",
+    data = ["//third_party/jnativehook:natives_windows_x64"],
     runtime_deps = [
         ":main",
         "//third_party/compose:compose_runtime_windows_x64",
@@ -61,33 +64,28 @@ java_binary(
     ],
 )
 
-aggregate_licenses(
-    name = "licenses_linux",
-    srcs = [
+COMMON_LICENSES = [
         "//third_party/compose:licenses",
         "//third_party/dagger:licenses",
         "//third_party/javax:licenses",
-        "//third_party/jnativehook:licenses_linux",
         "//third_party/kord:licenses",
         "//third_party/kotlin:licenses",
         "//third_party/lavaplayer:licenses",
         "//third_party/proto:licenses",
-    ],
+]
+
+aggregate_licenses(
+    name = "licenses_linux",
+    srcs = [
+        "//third_party/jnativehook:licenses_linux",
+    ] + COMMON_LICENSES,
 )
 
 aggregate_licenses(
     name = "licenses_windows",
     srcs = [
-        "//third_party/compose:licenses",
-        "//third_party/dagger:licenses",
-        "//third_party/javax:licenses",
         "//third_party/jnativehook:licenses_windows",
-        "//third_party/kord:licenses",
-        "//third_party/kotlin:licenses",
-        "//third_party/lavaplayer:licenses",
-        "//third_party/proto:licenses",
-        "//third_party/slf4j:licenses",
-    ],
+    ] + COMMON_LICENSES,
 )
 
 jlink_linux(
@@ -97,7 +95,7 @@ jlink_linux(
 
 synced_linux_pkg(
     name = "synced_linux_x64_pkg",
-    binary_target = ":Synced_linux_x64_deploy.jar",
+    binary_target = ":Synced_linux_x64",
     execution_script_target = "//scripts:linux",
     jlink_package_target = ":jlink_linux",
     licenses_target = ":licenses_linux",
@@ -110,7 +108,7 @@ jlink_windows(
 
 synced_windows_pkg(
     name = "synced_windows_x64_pkg",
-    binary_target = ":Synced_windows_x64_deploy.jar",
+    binary_target = ":Synced_windows_x64",
     execution_script_target = "//scripts:windows",
     jlink_package_target = ":jlink_windows",
     licenses_target = ":licenses_windows",
@@ -118,8 +116,8 @@ synced_windows_pkg(
 
 synced_windows_pkg(
     name = "synced_windows_x64_dev_pkg",
-    binary_target = ":Synced_windows_x64_dev_deploy.jar",
+    binary_target = ":Synced_windows_x64_dev",
     execution_script_target = "//scripts:windows",
     jlink_package_target = ":jlink_windows",
-    licenses_target = ":licenses",
+    licenses_target = ":licenses_windows",
 )

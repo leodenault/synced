@@ -62,7 +62,7 @@ class PlayerPageViewModel private constructor(
         searchBoxValue = newValue
     }
 
-    fun onPlayButtonClick() {
+    fun playCurrentTrack() {
         val stream = activeAudioStream.value
         val selectedTrack = audioSelectorViewModel.selectedAudioTrack.value
 
@@ -77,12 +77,18 @@ class PlayerPageViewModel private constructor(
     }
 
     fun onTrackDoubleTapped(audioTrack: AudioTrackViewModel) {
+        activeAudioStream.value?.close()
         loadAndPlayTrack(audioTrack)
     }
 
     fun onPlayNextTrack() = playTrackOffsetBy(1)
 
     fun onPlayPreviousTrack() = playTrackOffsetBy(-1)
+
+    fun stopCurrentTrack() {
+        activeAudioStream.value?.close()
+        activeAudioStream.value = null
+    }
 
     private fun playTrackOffsetBy(offsetIndex: Int) {
         val selectedTrack = audioSelectorViewModel.selectedAudioTrack.value ?: return

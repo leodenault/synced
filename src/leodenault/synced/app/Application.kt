@@ -9,6 +9,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
+import com.github.kwhat.jnativehook.GlobalScreen
 import kotlinx.coroutines.runBlocking
 import leodenault.synced.discord.ConnectedClient
 import leodenault.synced.discordnavigation.DiscordNavigator
@@ -26,12 +27,14 @@ class Application @Inject constructor(
 ) {
 
   fun run() {
+    GlobalScreen.registerNativeHook()
     startup.startup()
 
     application {
       Window(
         onCloseRequest = {
           runBlocking { connectedClient.value?.disconnect() }
+          GlobalScreen.unregisterNativeHook()
           exitApplication()
         },
         title = "Synced",

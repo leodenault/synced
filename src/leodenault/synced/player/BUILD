@@ -8,6 +8,7 @@ kt_jvm_library(
     name = "player",
     srcs = [
         "AudioSelectorView.kt",
+        "MediaKeyEventHandler.kt",
         "NowPlayingView.kt",
         "PlayerButtonView.kt",
         "PlayerControlsView.kt",
@@ -22,6 +23,7 @@ kt_jvm_library(
         "//src/leodenault/synced/audioselector",
         "//src/leodenault/synced/ui",
         "//third_party/compose",
+        "//third_party/jnativehook",
     ],
 )
 
@@ -35,6 +37,7 @@ kt_jvm_library(
         "//src/leodenault/synced/audioselector",
         "//src/leodenault/synced/desktopaudio",
         "//third_party/compose",
+        "//third_party/jnativehook:jnativehook",
     ],
 )
 

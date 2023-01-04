@@ -28,6 +28,7 @@ kt_jvm_library(
         "//third_party/compose",
         "//third_party/javax:inject",
         "//third_party/kotlin",
+        "//third_party/jnativehook",
     ],
 )
 

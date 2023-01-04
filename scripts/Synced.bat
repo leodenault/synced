@@ -1,1 +1,1 @@
-.\jre\bin\java.exe -jar Synced_windows_x64_deploy.jar
+.\jre\bin\java.exe -Djava.library.path=third_party\jnativehook -jar Synced_windows_x64_deploy.jar

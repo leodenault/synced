@@ -1,3 +1,5 @@
+load("//bazel:jnativehook_rules.bzl", "natives_linux", "natives_windows")
+
 licenses(["reciprocal"]) # LGPL
 
 package(
@@ -7,6 +9,16 @@ package(
 alias(
     name = "jnativehook",
     actual = "@jnativehook//jar",
+)
+
+natives_linux(
+    name = "natives_linux_x64",
+    jnativehook_lib_target = ":jnativehook",
+)
+
+natives_windows(
+    name = "natives_windows_x64",
+    jnativehook_lib_target = ":jnativehook",
 )
 
 filegroup(

@@ -42,6 +42,7 @@ def _synced_pkg(
             "//dev:aggregate_licenses",
             "//dev:deploy",
             binary_target,
+            binary_target + "_deploy.jar",
             execution_script_target,
             jlink_package_target,
             licenses_target,
@@ -52,10 +53,11 @@ def _synced_pkg(
             $(RULEDIR) \\
             {platform_name} \\
             $(location {execution_script_target}) \\
-            $(location {binary_target}) \\
+            $(location {binary_target}_deploy.jar) \\
             $(location {licenses_target}) \\
             "$(location {jlink_package_target})" \\
-            $@
+            "$(location {binary_target}).runfiles/__main__/" \\
+            "$@"
         """.format(
             platform_name = platform_name,
             execution_script_target = execution_script_target,
