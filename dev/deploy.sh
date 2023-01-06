@@ -9,8 +9,9 @@ LICENSES_ZIP=$5
 JLINK_ZIP=$6
 DATA_DEPS_DIR=$7
 OUT_FILE=$8
+OUT_DIR_NAME=$9
 
-TEMP_DIR="$OUT_DIR/Synced"
+TEMP_DIR="$OUT_DIR/$OUT_DIR_NAME"
 
 mkdir $TEMP_DIR
 
@@ -31,7 +32,7 @@ rsync \
   $TEMP_DIR
 
 pushd "$OUT_DIR" > /dev/null
-zip -qr "$CWD/$OUT_FILE" Synced
+zip -qr "$CWD/$OUT_FILE" $OUT_DIR_NAME
 popd > /dev/null
 
 rm -rf $TEMP_DIR

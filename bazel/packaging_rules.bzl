@@ -3,7 +3,8 @@ def synced_linux_pkg(
         binary_target,
         execution_script_target,
         jlink_package_target,
-        licenses_target):
+        licenses_target,
+        top_level_dir_name):
     _synced_pkg(
         name,
         "linux",
@@ -11,6 +12,7 @@ def synced_linux_pkg(
         execution_script_target,
         jlink_package_target,
         licenses_target,
+        top_level_dir_name,
     )
 
 def synced_windows_pkg(
@@ -18,7 +20,8 @@ def synced_windows_pkg(
         binary_target,
         execution_script_target,
         jlink_package_target,
-        licenses_target):
+        licenses_target,
+        top_level_dir_name):
     _synced_pkg(
         name,
         "windows",
@@ -26,6 +29,7 @@ def synced_windows_pkg(
         execution_script_target,
         jlink_package_target,
         licenses_target,
+        top_level_dir_name,
     )
 
 def _synced_pkg(
@@ -34,7 +38,8 @@ def _synced_pkg(
         binary_target,
         execution_script_target,
         jlink_package_target,
-        licenses_target):
+        licenses_target,
+        top_level_dir_name):
     native.genrule(
         name = name,
         outs = [name + ".zip"],
@@ -57,12 +62,14 @@ def _synced_pkg(
             $(location {licenses_target}) \\
             "$(location {jlink_package_target})" \\
             "$(location {binary_target}).runfiles/__main__/" \\
-            "$@"
+            "$@" \\
+            {top_level_dir_name}
         """.format(
             platform_name = platform_name,
             execution_script_target = execution_script_target,
             binary_target = binary_target,
             jlink_package_target = jlink_package_target,
             licenses_target = licenses_target,
+            top_level_dir_name = top_level_dir_name,
         )
     )

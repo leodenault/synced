@@ -65,13 +65,14 @@ java_binary(
 )
 
 COMMON_LICENSES = [
-        "//third_party/compose:licenses",
-        "//third_party/dagger:licenses",
-        "//third_party/javax:licenses",
-        "//third_party/kord:licenses",
-        "//third_party/kotlin:licenses",
-        "//third_party/lavaplayer:licenses",
-        "//third_party/proto:licenses",
+    "//:license",
+    "//third_party/compose:licenses",
+    "//third_party/dagger:licenses",
+    "//third_party/javax:licenses",
+    "//third_party/kord:licenses",
+    "//third_party/kotlin:licenses",
+    "//third_party/lavaplayer:licenses",
+    "//third_party/proto:licenses",
 ]
 
 aggregate_licenses(
@@ -99,6 +100,7 @@ synced_linux_pkg(
     execution_script_target = "//scripts:linux",
     jlink_package_target = ":jlink_linux",
     licenses_target = ":licenses_linux",
+    top_level_dir_name = "Synced",
 )
 
 jlink_windows(
@@ -112,6 +114,7 @@ synced_windows_pkg(
     execution_script_target = "//scripts:windows",
     jlink_package_target = ":jlink_windows",
     licenses_target = ":licenses_windows",
+    top_level_dir_name = "Synced",
 )
 
 synced_windows_pkg(
@@ -120,4 +123,5 @@ synced_windows_pkg(
     execution_script_target = "//scripts:windows",
     jlink_package_target = ":jlink_windows",
     licenses_target = ":licenses_windows",
+    top_level_dir_name = "synced_windows_x64_dev",
 )

@@ -4,3 +4,9 @@ package_group(
         "//src/...",
     ],
 )
+
+filegroup(
+    name = "license",
+    visibility = [":all_packages"],
+    srcs = ["LICENSE"],
+)
