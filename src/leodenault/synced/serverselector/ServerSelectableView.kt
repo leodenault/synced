@@ -1,5 +1,6 @@
 package leodenault.synced.serverselector
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Divider
@@ -8,14 +9,17 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import leodenault.synced.ui.SelectableItem
 
 @Composable
 fun ServerSelectable(
   modifier: Modifier = Modifier,
   text: String,
-  icon: String? = null,
+  iconData: ImageBitmap? = null,
   isSelected: Boolean = false,
   onSelect: () -> Unit = {}
 ) {
@@ -31,12 +35,28 @@ fun ServerSelectable(
   ) {
     Column(
       modifier = Modifier.size(60.dp),
-      verticalArrangement = Arrangement.Center
+      verticalArrangement = Arrangement.Center,
+      horizontalAlignment = Alignment.CenterHorizontally
     ) {
-      if (icon != null) {
-//        Image(
-//          painter = Painter
-//        )
+      if (iconData == null) {
+        Column(
+          modifier = Modifier.fillMaxSize().background(color = MaterialTheme.colors.primary),
+          verticalArrangement = Arrangement.Center,
+          horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+          Text(
+            modifier = modifier.width(IntrinsicSize.Min),
+            text = text.first().toString(),
+            color = MaterialTheme.colors.onPrimary,
+            fontSize = 36.sp,
+            fontWeight = FontWeight.Bold
+          )
+        }
+      } else {
+        Image(
+          bitmap = iconData,
+          contentDescription = "Discord server icon."
+        )
       }
     }
 

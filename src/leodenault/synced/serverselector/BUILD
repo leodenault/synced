@@ -27,6 +27,7 @@ kt_jvm_library(
     name = "viewmodel",
     srcs = [
         "ChannelViewModel.kt",
+        "ServerIconStore.kt",
         "ServerSelectorViewModel.kt",
         "ServerViewModel.kt",
     ],

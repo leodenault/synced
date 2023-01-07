@@ -47,6 +47,7 @@ class ServerSelectorView(
             itemsIndexed(viewModel.servers.contents) { index, server ->
               ServerSelectable(
                 text = server.name,
+                iconData = server.icon.value,
                 isSelected = selectedServerIndex == index,
                 onSelect = {
                   if (selectedServerIndex != index) {
