@@ -1,22 +1,22 @@
 package leodenault.synced.loadingpage
 
-import leodenault.synced.discordnavigation.DiscordNavigator
+import leodenault.synced.navigation.Navigator
 import javax.inject.Inject
 import javax.inject.Singleton
 
 class LoadingPageViewModel(
-  private val discordNavigator: DiscordNavigator,
-  private val navigateToNextPage: suspend DiscordNavigator.() -> Unit
+  private val navigator: Navigator,
+  private val navigateToNextPage: suspend Navigator.() -> Unit
 ) {
   suspend fun load() {
-    discordNavigator.navigateToNextPage()
+    navigator.navigateToNextPage()
   }
 
   @Singleton
-  class Factory @Inject constructor(private val discordNavigator: DiscordNavigator) {
+  class Factory @Inject constructor(private val navigator: Navigator) {
     fun create(
-      navigateToNextPage: suspend DiscordNavigator.() -> Unit
+      navigateToNextPage: suspend Navigator.() -> Unit
     ): LoadingPageViewModel =
-      LoadingPageViewModel(discordNavigator, navigateToNextPage)
+      LoadingPageViewModel(navigator, navigateToNextPage)
   }
 }

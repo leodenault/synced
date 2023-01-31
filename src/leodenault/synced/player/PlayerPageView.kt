@@ -13,13 +13,9 @@ import leodenault.synced.app.PageView
 
 class PlayerPageView(private val viewModel: PlayerPageViewModel) : PageView {
     @Composable
-    override fun render(modifier: Modifier) {
-        Column(modifier = modifier) {
-            PlayerHeader(
-                viewModel::onSelectDirectory,
-                viewModel.searchBoxValue,
-                viewModel::onSearchBoxChange
-            )
+    override fun render() {
+        Column {
+            PlayerHeader(viewModel.playerHeaderViewModel)
 
             Divider(modifier = Modifier.height(1.dp), color = MaterialTheme.colors.onBackground)
 
@@ -33,6 +29,7 @@ class PlayerPageView(private val viewModel: PlayerPageViewModel) : PageView {
 
             PlayerFooter(
                 modifier = Modifier.fillMaxHeight().fillMaxWidth(),
+                isEnabled = viewModel.arePlayerControlsEnabled,
                 activeTitle = viewModel.activeTitle,
                 isAudioPlaying = viewModel.isAudioPlaying,
                 onPlayButtonClick = viewModel::playCurrentTrack,

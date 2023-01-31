@@ -1,4 +1,4 @@
-package leodenault.synced.serverselector
+package leodenault.synced.channelselection
 
 import dagger.Module
 import dagger.Provides
@@ -7,7 +7,7 @@ import leodenault.synced.util.mutableDataOf
 import javax.inject.Singleton
 
 @Module
-abstract class ServerSelectorDaggerModule {
+abstract class ChannelSelectionDaggerModule {
   companion object {
     @Provides
     @Singleton

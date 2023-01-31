@@ -1,4 +1,4 @@
-package leodenault.synced.serverselector
+package leodenault.synced.channelselection
 
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.res.loadImageBitmap

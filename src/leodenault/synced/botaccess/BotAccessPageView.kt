@@ -13,9 +13,9 @@ import leodenault.synced.app.PageView
 
 class BotAccessPageView(private val viewModel: BotAccessPageViewModel) : PageView {
   @Composable
-  override fun render(modifier: Modifier) {
+  override fun render() {
     Column(
-      modifier = modifier,
+      modifier = Modifier.fillMaxSize(),
       horizontalAlignment = Alignment.CenterHorizontally,
       verticalArrangement = Arrangement.Center,
     ) {

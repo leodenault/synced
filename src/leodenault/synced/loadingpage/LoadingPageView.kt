@@ -8,15 +8,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.modifier.modifierLocalOf
 import androidx.compose.ui.unit.dp
 import leodenault.synced.app.PageView
 
 class LoadingPageView(private val viewModel: LoadingPageViewModel) : PageView {
   @Composable
-  override fun render(modifier: Modifier) {
+  override fun render() {
     LaunchedEffect("") { viewModel.load() }
     Column(
-      modifier = modifier,
+      modifier = Modifier.fillMaxSize(),
       verticalArrangement = Arrangement.Center,
       horizontalAlignment = Alignment.CenterHorizontally
     ) {

@@ -5,7 +5,7 @@ package(
 )
 
 kt_jvm_library(
-    name = "bottaccess",
+    name = "botaccess",
     srcs = ["BotAccessPageView.kt"],
     plugins = ["//third_party/compose:compose_compiler"],
     deps = [
@@ -20,7 +20,7 @@ kt_jvm_library(
     deps = [
         "//src/leodenault/synced/coroutines",
         "//src/leodenault/synced/discord",
-        "//src/leodenault/synced/discordnavigation",
+        "//src/leodenault/synced/navigation",
         "//src/leodenault/synced/settings",
         "//third_party/javax:inject",
         "//third_party/kotlin",

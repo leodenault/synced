@@ -10,9 +10,8 @@ import leodenault.synced.app.PageView
 
 class ErrorPageView(private val message: String) : PageView {
   @Composable
-  override fun render(modifier: Modifier) {
+  override fun render() {
     Column(
-      modifier = modifier,
       verticalArrangement = Arrangement.Center,
       horizontalAlignment = Alignment.CenterHorizontally
     ) {

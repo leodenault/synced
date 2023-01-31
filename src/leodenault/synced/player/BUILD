@@ -21,6 +21,7 @@ kt_jvm_library(
         ":viewmodel",
         "//src/leodenault/synced/app:page",
         "//src/leodenault/synced/audioselector",
+        "//src/leodenault/synced/channelselection:channelselection",
         "//src/leodenault/synced/ui",
         "//third_party/compose",
         "//third_party/jnativehook",
@@ -31,11 +32,15 @@ kt_jvm_library(
     name = "viewmodel",
     srcs = [
         "AudioSelectorViewModel.kt",
+        "PlayerHeaderViewModel.kt",
         "PlayerPageViewModel.kt",
     ],
     deps = [
         "//src/leodenault/synced/audioselector",
         "//src/leodenault/synced/desktopaudio",
+        "//src/leodenault/synced/discord",
+        "//src/leodenault/synced/navigation",
+        "//src/leodenault/synced/channelselection:viewmodel",
         "//third_party/compose",
         "//third_party/jnativehook:jnativehook",
     ],

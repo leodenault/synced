@@ -12,7 +12,7 @@ kt_jvm_library(
         "//src/leodenault/synced/compose",
         "//src/leodenault/synced/coroutines",
         "//src/leodenault/synced/player",
-        "//src/leodenault/synced/serverselector",
+        "//src/leodenault/synced/channelselection:channelselection",
         "//src/leodenault/synced/ui",
         "//third_party/compose",
         "//third_party/kotlin",

@@ -10,8 +10,7 @@ kt_jvm_library(
     deps = [
         "//src/leodenault/synced/desktopaudio",
         "//src/leodenault/synced/discord",
-        "//src/leodenault/synced/discordnavigation",
-        "//src/leodenault/synced/playernavigation",
+        "//src/leodenault/synced/navigation",
         "//third_party/dagger",
         "//third_party/javax:inject",
     ],

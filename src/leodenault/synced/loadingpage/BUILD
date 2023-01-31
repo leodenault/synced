@@ -18,7 +18,7 @@ kt_jvm_library(
     name = "viewmodel",
     srcs = ["LoadingPageViewModel.kt"],
     deps = [
-        "//src/leodenault/synced/discordnavigation",
+        "//src/leodenault/synced/navigation",
         "//third_party/javax:inject",
     ],
 )
@@ -27,7 +27,7 @@ kt_jvm_library(
     name = "dagger_module",
     srcs = ["LoadingPageDaggerModule.kt"],
     deps = [
-        "//src/leodenault/synced/discordnavigation",
+        "//src/leodenault/synced/navigation",
         "//src/leodenault/synced/util",
         "//third_party/dagger",
     ],

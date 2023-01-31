@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 @Composable
 fun PlayerFooter(
   modifier: Modifier = Modifier,
+  isEnabled: Boolean = false,
   isAudioPlaying: Boolean = false,
   activeTitle: String? = null,
   onPlayButtonClick: () -> Unit = {},
@@ -20,13 +21,15 @@ fun PlayerFooter(
       .height(IntrinsicSize.Max)
       .background(color = MaterialTheme.colors.primary)
   ) {
-    NowPlaying(title = activeTitle)
-    PlayerControls(
-      modifier = Modifier.fillMaxWidth().fillMaxHeight(),
-      isAudioPlaying = isAudioPlaying,
-      onPlayButtonClick = onPlayButtonClick,
-      onNextTrackClick = onNextTrackClick,
-      onPreviousTrackClick = onPreviousTrackClick
-    )
+    if (isEnabled) {
+      NowPlaying(title = activeTitle)
+      PlayerControls(
+        modifier = Modifier.fillMaxWidth().fillMaxHeight(),
+        isAudioPlaying = isAudioPlaying,
+        onPlayButtonClick = onPlayButtonClick,
+        onNextTrackClick = onNextTrackClick,
+        onPreviousTrackClick = onPreviousTrackClick
+      )
+    }
   }
 }

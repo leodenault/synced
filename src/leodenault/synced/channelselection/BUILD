@@ -5,13 +5,16 @@ package(
 )
 
 kt_jvm_library(
-    name = "serverselector",
+    name = "channelselection",
     srcs = [
-        "ChannelSelectorView.kt",
+        "ChannelDropdownCollectionView.kt",
+        "ChannelSelectorButtonView.kt",
+        "ChannelSelectorDropdownView.kt",
         "ChannelView.kt",
+        "DropdownMenuItemDividerView.kt",
+        "ServerAvatarView.kt",
+        "ServerDropdownCollectionView.kt",
         "ServerSelectableView.kt",
-        "ServerSelectorHeaderView.kt",
-        "ServerSelectorView.kt",
     ],
     plugins = ["//third_party/compose:compose_compiler"],
     deps = [
@@ -26,17 +29,16 @@ kt_jvm_library(
 kt_jvm_library(
     name = "viewmodel",
     srcs = [
-        "ChannelViewModel.kt",
+        "ChannelDropdownViewModel.kt",
+        "DropdownViewState.kt",
         "ServerIconStore.kt",
-        "ServerSelectorViewModel.kt",
-        "ServerViewModel.kt",
     ],
     deps = [
         "//src/leodenault/synced/audio",
         "//src/leodenault/synced/compose",
         "//src/leodenault/synced/coroutines",
         "//src/leodenault/synced/discord",
-        "//src/leodenault/synced/discordnavigation",
+        "//src/leodenault/synced/navigation",
         "//src/leodenault/synced/settings",
         "//third_party/compose",
         "//third_party/dagger",
@@ -47,7 +49,7 @@ kt_jvm_library(
 
 kt_jvm_library(
     name = "dagger_module",
-    srcs = ["ServerSelectorDaggerModule.kt"],
+    srcs = ["ChannelSelectionDaggerModule.kt"],
     deps = [
         "//src/leodenault/synced/discord",
         "//src/leodenault/synced/util",

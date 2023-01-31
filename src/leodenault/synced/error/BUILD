@@ -19,14 +19,3 @@ kt_jvm_library(
     srcs = ["Annotations.kt"],
     deps = ["//third_party/javax:inject"],
 )
-
-kt_jvm_library(
-    name = "dagger_module",
-    srcs = ["ErrorDaggerModule.kt"],
-    deps = [
-        ":annotations",
-        "//src/leodenault/synced/util",
-        "//third_party/dagger",
-        "//third_party/javax:inject",
-    ],
-)

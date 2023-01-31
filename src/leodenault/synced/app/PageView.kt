@@ -6,12 +6,12 @@ import androidx.compose.ui.Modifier
 
 interface PageView {
   @Composable
-  fun render(modifier: Modifier)
+  fun render()
 
   companion object {
     val EMPTY = object : PageView {
       @Composable
-      override fun render(modifier: Modifier) {
+      override fun render() {
         Text("This page is empty... :/")
       }
     }

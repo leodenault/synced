@@ -4,12 +4,10 @@ import dagger.Component
 import leodenault.synced.audio.AudioDaggerModule
 import leodenault.synced.desktopaudio.DesktopAudioDaggerModule
 import leodenault.synced.discord.DiscordDaggerModule
-import leodenault.synced.error.ErrorDaggerModule
 import leodenault.synced.loadingpage.LoadingPageDaggerModule
-import leodenault.synced.discordnavigation.DiscordNavigationDaggerModule
+import leodenault.synced.navigation.NavigationDaggerModule
 import leodenault.synced.player.PlayerDaggerModule
-import leodenault.synced.playernavigation.PlayerNavigationDaggerModule
-import leodenault.synced.serverselector.ServerSelectorDaggerModule
+import leodenault.synced.channelselection.ChannelSelectionDaggerModule
 import leodenault.synced.settings.SettingsDaggerModule
 import javax.inject.Singleton
 
@@ -19,12 +17,10 @@ import javax.inject.Singleton
     AudioDaggerModule::class,
     DesktopAudioDaggerModule::class,
     DiscordDaggerModule::class,
-    DiscordNavigationDaggerModule::class,
-    ErrorDaggerModule::class,
     LoadingPageDaggerModule::class,
+    NavigationDaggerModule::class,
     PlayerDaggerModule::class,
-    PlayerNavigationDaggerModule::class,
-    ServerSelectorDaggerModule::class,
+    ChannelSelectionDaggerModule::class,
     SettingsDaggerModule::class,
   ]
 )

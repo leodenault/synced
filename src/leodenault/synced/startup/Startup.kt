@@ -6,8 +6,7 @@ import leodenault.synced.desktopaudio.AudioDirectoryFile
 import leodenault.synced.desktopaudio.AudioFile
 import leodenault.synced.desktopaudio.DesktopAudioListLoader
 import leodenault.synced.discord.DisconnectedClient
-import leodenault.synced.discordnavigation.DiscordNavigator
-import leodenault.synced.playernavigation.PlayerNavigator
+import leodenault.synced.navigation.Navigator
 import leodenault.synced.settings.SettingsManager
 import leodenault.synced.util.MutableData
 import java.io.File
@@ -15,8 +14,7 @@ import javax.inject.Inject
 
 @Reusable
 class Startup @Inject constructor(
-  private val discordNavigator: DiscordNavigator,
-  private val playerNavigator: PlayerNavigator,
+  private val navigator: Navigator,
   private val mutableAudioFiles: MutableState<List<AudioFile>>,
   private val desktopAudioListLoader: DesktopAudioListLoader,
   private val mutableAudioDirectory: MutableData<File>,
@@ -25,16 +23,14 @@ class Startup @Inject constructor(
   private val disconnectedClientFactory: DisconnectedClient.Factory
 ) {
   fun startup() {
-    playerNavigator.navigateToPlayer()
-
     val settings = settingsManager.fetch()
     val disconnectedClient = disconnectedClientFactory.create()
-    discordNavigator.navigateToLoadingPage {
+    navigator.navigateToLoadingPage {
       mutableAudioDirectory.value = audioDirectoryFile.load()
       mutableAudioFiles.value = desktopAudioListLoader.loadAudio()
       if (settings.hasBotToken()) {
         disconnectedClient.connect(settings.botToken).fold(
-          onSuccess = { navigateToServerSelector(it) },
+          onSuccess = { navigateToPlayer(it) },
           onFailure = {
             navigateToBotAccess(
               disconnectedClient,
