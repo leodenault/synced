@@ -43,12 +43,10 @@ fun ChannelSelectorDropdown(
             viewState.selectedChannel?.channel,
             onNavigateBack = { viewModel.onViewStateChange(viewState.onNavigateBack()) },
             onChannelSelected = {
-              viewModel.onChannelSelected(it)
-              viewModel.onViewStateChange(viewState.onChannelSelected(it))
+              viewModel.onChannelSelected(it, viewState)
             },
             onChannelDeselected = {
-              viewModel.onChannelDeselected()
-              viewModel.onViewStateChange(viewState.onChannelDeselected())
+              viewModel.onChannelDeselected(viewState)
             }
           )
         }

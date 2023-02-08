@@ -9,6 +9,8 @@ import dev.kord.core.behavior.channel.asChannelOf
 import dev.kord.core.behavior.channel.connect
 import dev.kord.core.entity.channel.VoiceChannel
 import dev.kord.voice.VoiceConnection
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.fold
 import kotlinx.coroutines.launch
@@ -28,6 +30,8 @@ class ChannelDropdownViewModel private constructor(
 ) {
   var dropdownState: DropdownViewState by mutableStateOf(DropdownViewState.Loading)
     private set
+  var previousVoiceConnectJob: Job? = null
+  var currentVoiceConnectJob: Job? = null
 
   init {
     CoroutineScopes.ioScope.launch {
@@ -54,23 +58,33 @@ class ChannelDropdownViewModel private constructor(
     dropdownState = newState
   }
 
-  fun onChannelSelected(channelData: DropdownViewState.ChannelData) {
-    if (mutableVoiceConnection.value != null) {
-      onChannelDeselected()
-    }
+  fun onChannelSelected(
+    channelData: DropdownViewState.ChannelData,
+    viewState: DropdownViewState.SelectingChannel
+  ) {
+    previousVoiceConnectJob = currentVoiceConnectJob
+    currentVoiceConnectJob = CoroutineScopes.ioScope.launch {
+      previousVoiceConnectJob?.cancelAndJoin()
+      if (mutableVoiceConnection.value != null) {
+        disconnectChannel(viewState)
+      }
 
-    CoroutineScopes.ioScope.launch {
       mutableVoiceConnection.value = channelData.channel.connect { audioProvider = audioPlayer }
-    }
-    onChannelSelectedListeners.forEach { it() }
+      onChannelSelectedListeners.forEach { it() }
+      onViewStateChange(viewState.onChannelSelected(channelData))
+    }.also { currentVoiceConnectJob = it }
   }
 
-  fun onChannelDeselected() {
-    CoroutineScopes.ioScope.launch {
-      mutableVoiceConnection.value?.leave()
-      mutableVoiceConnection.value = null
-    }
+  fun onChannelDeselected(viewState: DropdownViewState.SelectingChannel) {
+    CoroutineScopes.ioScope.launch { disconnectChannel(viewState) }
+  }
+
+  private suspend fun disconnectChannel(viewState: DropdownViewState.SelectingChannel) {
+    mutableVoiceConnection.value?.leave()
+    mutableVoiceConnection.value = null
+
     onChannelDeselectedListeners.forEach { it() }
+    onViewStateChange(viewState.onChannelDeselected())
   }
 
   @Reusable
