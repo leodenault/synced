@@ -11,6 +11,7 @@ import dev.kord.core.entity.channel.VoiceChannel
 import dev.kord.voice.VoiceConnection
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancelAndJoin
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.fold
 import kotlinx.coroutines.launch
@@ -67,6 +68,8 @@ class ChannelDropdownViewModel private constructor(
       previousVoiceConnectJob?.cancelAndJoin()
       if (mutableVoiceConnection.value != null) {
         disconnectChannel(viewState)
+        // TODO(#11): Remove this delay once the issue is fixed.
+        delay(250)
       }
 
       mutableVoiceConnection.value = channelData.channel.connect { audioProvider = audioPlayer }
