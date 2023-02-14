@@ -21,12 +21,18 @@ class AudioSelectorViewModel(
     onTrackSelected(audioTrack)
   }
 
+  fun onUnselect() {
+    selectedTrack = null
+  }
+
   fun onSelectNextTrack() = selectTrackOffsetBy(1)
 
   fun onSelectPreviousTrack() = selectTrackOffsetBy(-1)
 
   private fun selectTrackOffsetBy(offsetIndex: Int) {
-    val selectedTrackIndex = audioTracks.indexOf(selectedTrack)
+    if (audioTracks.isEmpty()) return
+
+    val selectedTrackIndex = indexFromKey(selectedTrack)
     var nextTrackIndex = selectedTrackIndex
     do {
       nextTrackIndex =
@@ -34,7 +40,17 @@ class AudioSelectorViewModel(
     } while (
       nextTrackIndex != selectedTrackIndex && !audioTracks[nextTrackIndex].isSupported)
 
+    // Ignore if we've wrapped around the whole list.
+    if (nextTrackIndex == selectedTrackIndex) return
+
     val newlySelectedTrack = audioTracks[nextTrackIndex]
     onSelect(newlySelectedTrack)
   }
+
+  /**
+   * Returns the index of [audioTrack] by looking it up by its [key][AudioTrackViewModel.key]. If
+   * no matching track is found, then -1 is returned.
+   */
+  private fun indexFromKey(audioTrack: AudioTrackViewModel?): Int =
+    if (audioTrack == null) -1 else audioTracks.indexOfFirst { it.key == audioTrack.key }
 }

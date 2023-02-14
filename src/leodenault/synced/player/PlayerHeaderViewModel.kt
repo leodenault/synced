@@ -26,6 +26,7 @@ class PlayerHeaderViewModel private constructor(
   private val desktopAudioListLoader: DesktopAudioListLoader,
   private val connectedClient: ConnectedClient,
   private val mutableConnectedClient: MutableData<ConnectedClient?>,
+  searchBoxValue: MutableState<String>,
   channelDropdownViewModelFactory: ChannelDropdownViewModel.Factory,
   onChannelSelectedListeners: List<() -> Unit>,
   onChannelDeselectedListeners: List<() -> Unit>
@@ -36,7 +37,7 @@ class PlayerHeaderViewModel private constructor(
     onChannelDeselectedListeners
   )
 
-  var searchBoxValue by mutableStateOf("")
+  var searchBoxValue by searchBoxValue
     private set
 
   fun onSelectDirectory() {
@@ -78,6 +79,7 @@ class PlayerHeaderViewModel private constructor(
     fun create(
       connectedClient: ConnectedClient,
       navigator: Navigator,
+      searchBoxValue: MutableState<String>,
       onChannelSelectedListeners: List<() -> Unit>,
       onChannelDeselectedListeners: List<() -> Unit>
     ) =
@@ -89,6 +91,7 @@ class PlayerHeaderViewModel private constructor(
         desktopAudioListLoader,
         connectedClient,
         mutableConnectedClient,
+        searchBoxValue,
         channelDropdownViewModelFactory,
         onChannelSelectedListeners,
         onChannelDeselectedListeners

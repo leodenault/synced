@@ -24,28 +24,28 @@ class PlayerPageViewModel private constructor(
   connectedClient: ConnectedClient,
   navigator: Navigator
 ) {
+  private var searchBoxValue = mutableStateOf("")
+
   var isChannelSelected = mutableStateOf(false)
   val isAudioPlaying by derivedStateOf {
     activeAudioStream.value.let { if (it == null) false else !it.isPaused.value }
   }
   val audioSelectorViewModel = AudioSelectorViewModel(derivedStateOf {
     mutableAudioFiles.value.filter {
-      it.javaFile.name.contains(other = searchBoxValue, ignoreCase = true)
+      it.javaFile.name.contains(other = searchBoxValue.value, ignoreCase = true)
     }.sortedBy { it.javaFile.name }.toViewModels()
   }, isChannelSelected, this::onTrackSelected)
   val activeTitle by derivedStateOf { activeAudioStream.value?.title }
   val playerHeaderViewModel = playerHeaderViewModelFactory.create(
     connectedClient,
     navigator,
+    searchBoxValue,
     onChannelSelectedListeners = listOf { isChannelSelected.value = true },
     onChannelDeselectedListeners = listOf {
       stopCurrentTrack()
       isChannelSelected.value = false
     }
   )
-
-  var searchBoxValue by mutableStateOf("")
-    private set
 
   fun onPlayCurrentTrack() {
     val stream = activeAudioStream.value
@@ -71,6 +71,7 @@ class PlayerPageViewModel private constructor(
   fun onPlayPreviousTrack() = audioSelectorViewModel.onSelectPreviousTrack()
 
   fun stopCurrentTrack() {
+    audioSelectorViewModel.onUnselect()
     activeAudioStream.value?.close()
     activeAudioStream.value = null
   }
