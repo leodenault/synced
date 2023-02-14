@@ -12,30 +12,27 @@ import androidx.compose.ui.unit.dp
 import leodenault.synced.app.PageView
 
 class PlayerPageView(private val viewModel: PlayerPageViewModel) : PageView {
-    @Composable
-    override fun render() {
-        Column {
-            PlayerHeader(viewModel.playerHeaderViewModel)
+  @Composable
+  override fun render() {
+    Column {
+      PlayerHeader(viewModel.playerHeaderViewModel)
 
-            Divider(modifier = Modifier.height(1.dp), color = MaterialTheme.colors.onBackground)
+      Divider(modifier = Modifier.height(1.dp), color = MaterialTheme.colors.onBackground)
 
-            AudioSelector(
-                modifier = Modifier.fillMaxHeight(0.78f),
-                audioTracks = viewModel.audioSelectorViewModel.audioTracks,
-                selectedTrack = viewModel.audioSelectorViewModel.selectedAudioTrack.value?.track,
-                onSelect = viewModel.audioSelectorViewModel::onSelect,
-                onDoubleTap = viewModel::onTrackDoubleTapped
-            )
+      AudioSelector(
+        modifier = Modifier.fillMaxHeight(0.78f),
+        viewModel = viewModel.audioSelectorViewModel
+      )
 
-            PlayerFooter(
-                modifier = Modifier.fillMaxHeight().fillMaxWidth(),
-                isEnabled = viewModel.arePlayerControlsEnabled,
-                activeTitle = viewModel.activeTitle,
-                isAudioPlaying = viewModel.isAudioPlaying,
-                onPlayButtonClick = viewModel::playCurrentTrack,
-                onNextTrackClick = viewModel::onPlayNextTrack,
-                onPreviousTrackClick = viewModel::onPlayPreviousTrack
-            )
-        }
+      PlayerFooter(
+        modifier = Modifier.fillMaxHeight().fillMaxWidth(),
+        isEnabled = viewModel.isChannelSelected.value,
+        activeTitle = viewModel.activeTitle,
+        isAudioPlaying = viewModel.isAudioPlaying,
+        onPlayButtonClick = viewModel::onPlayCurrentTrack,
+        onNextTrackClick = viewModel::onPlayNextTrack,
+        onPreviousTrackClick = viewModel::onPlayPreviousTrack
+      )
     }
+  }
 }

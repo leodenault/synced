@@ -1,34 +1,30 @@
 package leodenault.synced.player
 
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import leodenault.synced.audioselector.AudioTrack
-import leodenault.synced.audioselector.AudioTrackViewModel
-import leodenault.synced.ui.LoadingColumn
 
 @Composable
 fun AudioSelector(
   modifier: Modifier = Modifier,
-  audioTracks: List<AudioTrackViewModel>,
-  selectedTrack: AudioTrackViewModel?,
-  onSelect: (AudioTrackViewModel) -> Unit,
-  onDoubleTap: (AudioTrackViewModel) -> Unit
+  viewModel: AudioSelectorViewModel
 ) {
-  LoadingColumn(
-    modifier = modifier,
-    isLoading = false
-  ) {
+  LazyColumn(modifier = modifier) {
     items(
-      items = audioTracks,
+      items = viewModel.audioTracks,
       key = { audioTrack -> audioTrack.key }
-    ) {
+    ) { audioTrack ->
       AudioTrack(
-        name = it.name,
-        isSelected = selectedTrack?.key == it.key,
-        onSelect = { onSelect(it) },
-        onDoubleTap = { onDoubleTap(it) },
-        isEnabled = it.isSupported
+        modifier = Modifier.height(40.dp),
+        name = audioTrack.name,
+        isSelected = viewModel.selectedTrack?.key == audioTrack.key,
+        onSelect = { viewModel.onSelect(audioTrack) },
+        isEnabled = audioTrack.isSupported,
+        isPlayable = viewModel.areTracksPlayable
       )
     }
   }

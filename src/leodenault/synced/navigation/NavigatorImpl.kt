@@ -17,7 +17,6 @@ import leodenault.synced.player.PlayerPageView
 import leodenault.synced.player.PlayerPageViewModel
 import leodenault.synced.settings.SettingsManager
 import javax.inject.Inject
-import javax.inject.Singleton
 
 class NavigatorImpl @Inject constructor(
   private val settingsManager: SettingsManager,
@@ -55,7 +54,7 @@ class NavigatorImpl @Inject constructor(
     currentPageView = PlayerPageView(playerPageViewModel)
     GlobalScreen.removeNativeKeyListener(mediaKeyEventHandler)
     mediaKeyEventHandler = MediaKeyEventHandler(
-      playerPageViewModel::playCurrentTrack,
+      playerPageViewModel::onPlayCurrentTrack,
       playerPageViewModel::onPlayNextTrack,
       playerPageViewModel::onPlayPreviousTrack,
       playerPageViewModel::stopCurrentTrack

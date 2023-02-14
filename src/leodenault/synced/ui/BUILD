@@ -7,11 +7,9 @@ package(
 kt_jvm_library(
     name = "ui",
     srcs = [
-        "FileFinder.kt",
         "LoadingColumn.kt",
         "PageHeader.kt",
         "SearchBox.kt",
-        "SelectableItem.kt",
         "TabView.kt",
     ],
     plugins = ["//third_party/compose:compose_compiler"],

@@ -10,15 +10,10 @@ import leodenault.synced.audio.AudioItemLoader
 import leodenault.synced.audio.AudioStream
 import leodenault.synced.audioselector.AudioTrackViewModel
 import leodenault.synced.coroutines.CoroutineScopes
-import leodenault.synced.desktopaudio.AudioDirectoryFile
 import leodenault.synced.desktopaudio.AudioFile
-import leodenault.synced.desktopaudio.DesktopAudioListLoader
 import leodenault.synced.discord.ConnectedClient
 import leodenault.synced.navigation.Navigator
-import leodenault.synced.util.MutableData
-import java.io.File
 import javax.inject.Inject
-import javax.swing.JFileChooser
 
 class PlayerPageViewModel private constructor(
   private val audioTrackViewModelFactory: AudioTrackViewModel.Factory,
@@ -29,6 +24,7 @@ class PlayerPageViewModel private constructor(
   connectedClient: ConnectedClient,
   navigator: Navigator
 ) {
+  var isChannelSelected = mutableStateOf(false)
   val isAudioPlaying by derivedStateOf {
     activeAudioStream.value.let { if (it == null) false else !it.isPaused.value }
   }
@@ -36,30 +32,28 @@ class PlayerPageViewModel private constructor(
     mutableAudioFiles.value.filter {
       it.javaFile.name.contains(other = searchBoxValue, ignoreCase = true)
     }.sortedBy { it.javaFile.name }.toViewModels()
-  })
+  }, isChannelSelected, this::onTrackSelected)
   val activeTitle by derivedStateOf { activeAudioStream.value?.title }
   val playerHeaderViewModel = playerHeaderViewModelFactory.create(
     connectedClient,
     navigator,
-    onChannelSelectedListeners = listOf { arePlayerControlsEnabled = true },
+    onChannelSelectedListeners = listOf { isChannelSelected.value = true },
     onChannelDeselectedListeners = listOf {
       stopCurrentTrack()
-      arePlayerControlsEnabled = false
+      isChannelSelected.value = false
     }
   )
-
-  var arePlayerControlsEnabled by mutableStateOf(false)
 
   var searchBoxValue by mutableStateOf("")
     private set
 
-  fun playCurrentTrack() {
+  fun onPlayCurrentTrack() {
     val stream = activeAudioStream.value
-    val selectedTrack = audioSelectorViewModel.selectedAudioTrack.value
+    val selectedTrack = audioSelectorViewModel.selectedTrack
 
     when {
-      stream == null -> if (selectedTrack == null) return else {
-        loadAndPlayTrack(selectedTrack.track)
+      stream == null -> {
+        if (selectedTrack == null) return else loadAndPlayTrack(selectedTrack)
       }
 
       isAudioPlaying -> stream.pause()
@@ -67,33 +61,18 @@ class PlayerPageViewModel private constructor(
     }
   }
 
-  fun onTrackDoubleTapped(audioTrack: AudioTrackViewModel) {
+  private fun onTrackSelected(audioTrack: AudioTrackViewModel) {
     activeAudioStream.value?.close()
     loadAndPlayTrack(audioTrack)
   }
 
-  fun onPlayNextTrack() = playTrackOffsetBy(1)
+  fun onPlayNextTrack() = audioSelectorViewModel.onSelectNextTrack()
 
-  fun onPlayPreviousTrack() = playTrackOffsetBy(-1)
+  fun onPlayPreviousTrack() = audioSelectorViewModel.onSelectPreviousTrack()
 
   fun stopCurrentTrack() {
     activeAudioStream.value?.close()
     activeAudioStream.value = null
-  }
-
-  private fun playTrackOffsetBy(offsetIndex: Int) {
-    val selectedTrack = audioSelectorViewModel.selectedAudioTrack.value ?: return
-    val allAudioTracks = audioSelectorViewModel.audioTracks
-    var nextTrackIndex = selectedTrack.index
-    do {
-      nextTrackIndex =
-        Math.floorMod(nextTrackIndex + offsetIndex, allAudioTracks.size)
-    } while (
-      nextTrackIndex != selectedTrack.index && !allAudioTracks[nextTrackIndex].isSupported)
-
-    val newlySelectedTrack = allAudioTracks[nextTrackIndex]
-    audioSelectorViewModel.onSelect(newlySelectedTrack)
-    loadAndPlayTrack(newlySelectedTrack)
   }
 
   private fun loadAndPlayTrack(audioTrack: AudioTrackViewModel) {
