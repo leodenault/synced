@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN"
+              "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="24" height="24"
+     viewBox="0 0 24 24">
+  <polygon points="0,2 17,11 0,22" style="fill:black" />
+  <path
+      fill="black" stroke="none"
+      d="M 7,2
+         L 24,11 7,22 7,18 18,11 7,5"
+  />
+
+</svg>

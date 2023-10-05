@@ -25,7 +25,7 @@ java_binary(
     runtime_deps = [
         ":preview",
         "//third_party/compose:compose_runtime_windows_x64",
-    ],
+    ]
 )
 
 jlink_windows(

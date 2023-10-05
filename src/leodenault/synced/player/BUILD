@@ -10,7 +10,6 @@ kt_jvm_library(
         "AudioSelectorView.kt",
         "MediaKeyEventHandler.kt",
         "NowPlayingView.kt",
-        "PlayerButtonView.kt",
         "PlayerControlsView.kt",
         "PlayerFooterView.kt",
         "PlayerHeaderView.kt",
@@ -26,6 +25,7 @@ kt_jvm_library(
         "//third_party/compose",
         "//third_party/jnativehook",
     ],
+    resources = ["//src/main/resources:resources"],
 )
 
 kt_jvm_library(
